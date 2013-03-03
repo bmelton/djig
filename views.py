@@ -33,8 +33,10 @@ def index(request):
     })
 
 def article_detail(request, slug):
-    article = Article.objects.get(slug=slug)
-    return HttpResponse(article)
+    article = get_object_or_404(Article, slug=slug)
+    return render(request, "djig/detail.html", {
+        "article"           : article,
+    })
 
 @login_required
 def submit_link(request):
@@ -96,5 +98,5 @@ def like_article(request, article_id):
     Vote.objects.record_vote(article, request.user, +1)
     article.love_count = article.love_count + 1
     article.save()
-    action.send(u, verb='liked', target=article)
+    action.send(request.user, verb='liked', target=article)
     return redirect("/")
