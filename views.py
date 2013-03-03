@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from voting.models import Vote
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from datetime import date, timedelta
+from text_utils import unescape
 
 def index(request):
     time_limit = date.today() - timedelta(hours=300)
@@ -30,49 +31,33 @@ def index(request):
         "paginator"         : paginator,
     })
 
-def unescape(text):
-    import re, htmlentitydefs
-    def fixup(m):
-        text = m.group(0)
-        if text[:2] == "&#":
-            try:
-                if text[:3] == "&#x":
-                    return unichr(int(text[3:-1], 16))
-                else:
-                    return unichr(int(text[2:-1]))
-            except ValueError:
-                pass
-        else:
-            try:
-                text = unichr(htmlentitydefs.name2codepoint[text[1:-1]])
-            except KeyError:
-                pass
-        return text
-    return re.sub("&#?\w+;", fixup, text)
-
 @login_required
 def submit_link(request):
     if request.method == "POST":
         form = ArticleFormLean(request.POST)
         if form.is_valid():
             url  = form.cleaned_data["url"]
-            r = requests.get(url)
-            soup = BeautifulSoup(r.text)
-            title = unescape(soup.title.string)
+            existing_article = Article.objects.filter(url=url)
+            if existing_article.count() > 0:
+                return HttpResponse("Duplicate")
+            else:
+                r = requests.get(url)
+                soup = BeautifulSoup(r.text)
+                title = unescape(soup.title.string)
 
-            o = urlparse(url)
-            site = "%s://%s" % (o.scheme, o.netloc)
-            site_name = "%s" % o.netloc.replace("www.", "")
-            data = {
-                'url': url, 
-                'title': title,
-                'site': site,
-                'site_name': site_name,
-            }
-            form = ArticleForm(initial=data)
-            return render(request, "djig/submit_link.html", {
-                "form"          : form,
-            })
+                o = urlparse(url)
+                site = "%s://%s" % (o.scheme, o.netloc)
+                site_name = "%s" % o.netloc.replace("www.", "")
+                data = {
+                    'url': url, 
+                    'title': title,
+                    'site': site,
+                    'site_name': site_name,
+                }
+                form = ArticleForm(initial=data)
+                return render(request, "djig/submit_link.html", {
+                    "form"          : form,
+                })
         else:
             return HttpResponse("submit_link")
     else:
