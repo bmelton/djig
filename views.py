@@ -6,6 +6,29 @@ from models import Article, ArticleForm, ArticleFormLean
 from urlparse import urlparse
 from django.contrib.auth.decorators import login_required
 from voting.models import Vote
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from datetime import date, timedelta
+
+def index(request):
+    time_limit = date.today() - timedelta(hours=300)
+    # current_articles = Article.objects.filter(created__gte=time_limit).order_by('-love_count', '-created')
+    current_articles = Article.objects.filter().order_by('-love_count', '-created')
+    articleset = Article.objects.filter().order_by('-love_count', '-created')
+    page = request.GET.get('page')
+    paginator = Paginator(articleset, 10)
+
+    try:
+        articles = paginator.page(page)
+    except PageNotAnInteger:
+        articles = paginator.page(1)
+    except EmptyPage:
+        articles = paginator.page(paginator.num_pages)
+
+    return render(request, "index.html", {
+        "articles"          : articles,
+        "current_articles"  : current_articles,
+        "paginator"         : paginator,
+    })
 
 def unescape(text):
     import re, htmlentitydefs
@@ -27,10 +50,6 @@ def unescape(text):
         return text
     return re.sub("&#?\w+;", fixup, text)
 
-# Create your views here.
-def index(request):
-    return HttpResponse("Index")
-
 @login_required
 def submit_link(request):
     if request.method == "POST":
@@ -51,14 +70,14 @@ def submit_link(request):
                 'site_name': site_name,
             }
             form = ArticleForm(initial=data)
-            return render(request, "news/submit_link.html", {
+            return render(request, "djig/submit_link.html", {
                 "form"          : form,
             })
         else:
             return HttpResponse("submit_link")
     else:
         form = ArticleForm()
-        return render(request, "news/submit_link.html", {
+        return render(request, "djig/submit_link.html", {
             "form"          : form,
         })
 
@@ -73,7 +92,7 @@ def submit_link_detail(request):
             return redirect("/")
         else:
             form = ArticleForm(request.POST)
-            return render(request, "news/submit_link.html", {
+            return render(request, "djig/submit_link.html", {
                 "form"          : form,
             })
     else:
