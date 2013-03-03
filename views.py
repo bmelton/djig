@@ -24,7 +24,7 @@ def index(request):
     except EmptyPage:
         articles = paginator.page(paginator.num_pages)
 
-    return render(request, "index.html", {
+    return render(request, "djig/index.html", {
         "articles"          : articles,
         "current_articles"  : current_articles,
         "paginator"         : paginator,
