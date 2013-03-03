@@ -12,4 +12,5 @@ urlpatterns = patterns('',
     url(r'^submit_link/$',                              'djig.views.submit_link',       name='djig_submit_link'),
     url(r'^submit_link_detail/$',                       'djig.views.submit_link_detail',name='djig_submit_link_detail'),
     url(r'^like/(?P<article_id>\d+)/$',                 'djig.views.like_article',      name='djig_like_article'),
+    url(r'^article/(?P<slug>[-\w]+)/$',                 'djig.views.article_detail',    name='djig_article_detail'),
 )

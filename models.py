@@ -41,6 +41,10 @@ class Article(models.Model):
             self.created = datetime.datetime.now()
         super(Article, self).save(*args, **kwargs)
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('djig_article_detail', [self.slug])
+
 class ArticleFormLean(ModelForm):
     class Meta:
         model = Article

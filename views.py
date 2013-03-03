@@ -9,6 +9,7 @@ from voting.models import Vote
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from datetime import date, timedelta
 from text_utils import unescape
+from actstream import action
 
 def index(request):
     time_limit = date.today() - timedelta(hours=300)
@@ -30,6 +31,10 @@ def index(request):
         "current_articles"  : current_articles,
         "paginator"         : paginator,
     })
+
+def article_detail(request, slug):
+    article = Article.objects.get(slug=slug)
+    return HttpResponse(article)
 
 @login_required
 def submit_link(request):
@@ -74,6 +79,7 @@ def submit_link_detail(request):
             obj = form.save(commit=False)
             obj.user = request.user
             obj.save()
+            action.send(request.user, verb='submitted', target=obj)
             return redirect("/")
         else:
             form = ArticleForm(request.POST)
@@ -90,4 +96,5 @@ def like_article(request, article_id):
     Vote.objects.record_vote(article, request.user, +1)
     article.love_count = article.love_count + 1
     article.save()
+    action.send(u, verb='liked', target=article)
     return redirect("/")

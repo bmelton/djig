@@ -34,7 +34,7 @@
                             Submitted by <a href="{% url userena_profile_detail article.user.username %}">{{ user.username }}</a>, {{ article.created|naturaltime }}
                         </div>
                         <div class="small-12 large-6 columns">
-                            {{ article.comment_count }} comments
+                            <a href="{% url djig_article_detail article.slug %}">{{ article.comment_count }} comments</a>
                             {% if user.is_superuser %}
                                 &middot; <a href="/admin/djig/article/{{ article.id }}/delete/">Delete</a>
                                 &middot; <a href="/admin/djig/article/{{ article.id }}/">Edit</a>
