@@ -9,8 +9,11 @@ from voting.models import Vote
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from datetime import date, timedelta
 from text_utils import unescape
-from actstream import action
 from voting.models import Vote
+
+from django.conf import settings
+if "actstream" in settings.INSTALLED_APPS:
+    from actstream import action
 
 def index(request):
     time_limit = date.today() - timedelta(hours=300)
@@ -80,7 +83,8 @@ def submit_link_detail(request):
             obj = form.save(commit=False)
             obj.user = request.user
             obj.save()
-            action.send(request.user, verb='submitted', target=obj)
+            if "actstream" in settings.INSTALLED_APPS:
+                action.send(request.user, verb='submitted', target=obj)
             return redirect("/")
         else:
             form = ArticleForm(request.POST)
@@ -98,5 +102,6 @@ def like_article(request, article_id):
     article.love_count = article.love_count + 1
     article.save()
     article.calculate_score()
-    action.send(request.user, verb='liked', target=article)
+    if "actstream" in settings.INSTALLED_APPS:
+        action.send(request.user, verb='liked', target=article)
     return redirect("/")
