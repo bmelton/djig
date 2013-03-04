@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load humanize %}
 {% load voting_tags %}
+{% load string_tools %}
 
 {% block content %}
     <div class="row">
@@ -17,7 +18,7 @@
         </div>
         {% for article in articles %}
             <div class="djig_row large-12 columns">
-                <h4 style="margin-bottom: 5px;"><a href="{{ article.url }}">{{ article.title.title }}</a></h4>
+                <h4 style="margin-bottom: 5px;"><a href="{{ article.url }}">{{ article.title|title }}</a></h4>
                 <div class="small-1 large-1 columns" style="text-align: center;">
                     {% vote_by_user user on article as vote %}
                     {% if vote.vote == 1 %}

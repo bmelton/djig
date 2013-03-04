@@ -6,14 +6,7 @@
 {% block content %}
     <div class="row">
         <div class="large-12 columns">
-            {% if user.is_authenticated %}
-                {% if user|is_following:article %}
-                    <a style="float: right;"class="small button" id="unfollow_button" href="{% follow_url article %}">Unfollow</a>
-                {% else %}
-                    <a style="float: right;" class="small button" id="follow_button" href="{% follow_url article %}">Follow </a>
-                {% endif %}
-            {% endif %}
-            <h2 style="margin-bottom: 5px;">{{ article.title }}</h2>
+            <h2 style="margin-bottom: 5px;">{{ article.title|title }}</h2>
             <hr />
         </div>
         <div class="large-12 columns center">
