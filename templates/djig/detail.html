@@ -1,14 +1,22 @@
 {% extends "base.html" %}
 {% load humanize %}
 {% load voting_tags %}
+{% load activity_tags %}
 
 {% block content %}
     <div class="row">
         <div class="large-12 columns">
-            <h2 style="margin-bottom: 5px;">
-            {{ article.title }}</h2>
+            {% if user.is_authenticated %}
+                {% if user|is_following:article %}
+                    <a style="float: right;"class="small button" id="unfollow_button" href="{% follow_url article %}">Unfollow</a>
+                {% else %}
+                    <a style="float: right;" class="small button" id="follow_button" href="{% follow_url article %}">Follow </a>
+                {% endif %}
+            {% endif %}
+            <h2 style="margin-bottom: 5px;">{{ article.title }}</h2>
+            <hr />
         </div>
-        <div class="djig_row large-12 columns center">
+        <div class="large-12 columns center">
             <div class="large-1 columns hide-for-small">
                 {% vote_by_user user on article as vote %}
                 {% if vote.vote == 1 %}
@@ -23,7 +31,7 @@
                 <p><a href="{{ article.site }}">{{ article.site_name }}</a> - {{ article.description }}</p>
                 <div class="row">
                     <div class="small-12 large-6 columns">
-                        Submitted by <a href="{% url userena_profile_detail article.user.username %}">{{ user.username }}</a>, {{ article.created|naturaltime }}
+                        Submitted by <a href="{% url userena_profile_detail article.user.username %}">{{ article.user.username }}</a>, {{ article.created|naturaltime }}
                     </div>
                     <div class="small-12 large-6 columns">
                         <a href="{% url djig_article_detail article.slug %}">{{ article.comment_count }} comments</a>

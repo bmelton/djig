@@ -13,9 +13,10 @@ from actstream import action
 
 def index(request):
     time_limit = date.today() - timedelta(hours=300)
+    # current_articles = Article.objects.all().order_by('-calculated_score')
     # current_articles = Article.objects.filter(created__gte=time_limit).order_by('-love_count', '-created')
-    current_articles = Article.objects.filter().order_by('-love_count', '-created')
-    articleset = Article.objects.filter().order_by('-love_count', '-created')
+    # current_articles = Article.objects.filter().order_by('-love_count', '-created')
+    articleset = Article.objects.filter().order_by('-calculated_score')[:100]
     page = request.GET.get('page')
     paginator = Paginator(articleset, 10)
 
@@ -28,8 +29,10 @@ def index(request):
 
     return render(request, "djig/index.html", {
         "articles"          : articles,
-        "current_articles"  : current_articles,
+        # "articleset"        : articleset,
+        # "current_articles"  : current_articles,
         "paginator"         : paginator,
+        "page"              : page,
     })
 
 def article_detail(request, slug):
@@ -66,7 +69,7 @@ def submit_link(request):
                     "form"          : form,
                 })
         else:
-            return HttpResponse("submit_link")
+            return HttpResponse(form.errors)
     else:
         form = ArticleForm()
         return render(request, "djig/submit_link.html", {
@@ -98,5 +101,6 @@ def like_article(request, article_id):
     Vote.objects.record_vote(article, request.user, +1)
     article.love_count = article.love_count + 1
     article.save()
+    article.calculate_score()
     action.send(request.user, verb='liked', target=article)
     return redirect("/")
