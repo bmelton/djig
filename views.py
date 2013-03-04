@@ -10,12 +10,10 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from datetime import date, timedelta
 from text_utils import unescape
 from actstream import action
+from voting.models import Vote
 
 def index(request):
     time_limit = date.today() - timedelta(hours=300)
-    # current_articles = Article.objects.all().order_by('-calculated_score')
-    # current_articles = Article.objects.filter(created__gte=time_limit).order_by('-love_count', '-created')
-    # current_articles = Article.objects.filter().order_by('-love_count', '-created')
     articleset = Article.objects.filter().order_by('-calculated_score')[:100]
     page = request.GET.get('page')
     paginator = Paginator(articleset, 10)
@@ -29,8 +27,6 @@ def index(request):
 
     return render(request, "djig/index.html", {
         "articles"          : articles,
-        # "articleset"        : articleset,
-        # "current_articles"  : current_articles,
         "paginator"         : paginator,
         "page"              : page,
     })

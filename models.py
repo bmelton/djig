@@ -54,6 +54,7 @@ class Article(models.Model):
         gravity = 1.8
         self.calculated_score = (self.love_count-1)/pow((hour_age+2), gravity)
         self.save()
+        print "%s -- %s -- %s" % (self.calculated_score, hour_age, self.title)
         return (self.love_count-1) / pow((hour_age+2), gravity)
 
 class ArticleFormLean(ModelForm):
