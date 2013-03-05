@@ -1,6 +1,6 @@
 Metadata-Version: 1.1
 Name: djig
-Version: 0.0a5
+Version: 0.0a6
 Summary: Djig is a minimalist news aggregator for Django, like Digg, sort of.
 Home-page: http://github.com/bmelton/djig/
 Author: Barry Melton
