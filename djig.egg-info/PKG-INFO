@@ -1,0 +1,16 @@
+Metadata-Version: 1.1
+Name: djig
+Version: 0.0a5
+Summary: Djig is a minimalist news aggregator for Django, like Digg, sort of.
+Home-page: http://github.com/bmelton/djig/
+Author: Barry Melton
+Author-email: barry.melton@gmail.com
+License: Creative Commons Non-Commercial, 3.0
+Description: UNKNOWN
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Framework :: Django
+Classifier: Intended Audience :: Developers
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Topic :: Internet :: WWW/HTTP
