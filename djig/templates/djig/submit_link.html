@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block content %}
+    <div class="large-12 columns">
+        <form method="post" action="{% url djig_submit_link_detail %}">
+            {% csrf_token %}
+            {% if form.errors %}
+                {{ form.errors }}
+            {% endif %}
+            <div class="large-12 columns">
+                <label for="id_title">Title:</label>
+                <input id="id_title" type="text" name="title" value="{{ form.title.value }}" style="width: 900px;" />
+            </div>
+            <div class="large-12 columns" style="margin-bottom: 10px; color: #999;">
+                <span style="margin-top: -5px; font-size: 11px; font-color: #ccc;">{{ form.url.value }}</span>
+            </div>
+            <div class="row">&nbsp;</div>
+            <div class="large-12 columns">
+                <textarea id="id_description" name="description" placeholder="Please provide a description or summary of the article." style="width: 900px;"></textarea>
+                <input type="hidden" id="id_url" name="url" value="{{ form.url.value }}" />
+                <input type="hidden" id="id_site" name="site" value="{{ form.site.value }}" />
+                <input type="hidden" id="id_site_name" name="site_name" value="{{ form.site_name.value }}" />
+            </div>
+            <div class="large-12 columns">
+                <input class="small button" type="submit" id="id_submit" name="submit" value="Submit News Link" />
+            </div>
+        </form>
+    </div>
+{% endblock %}

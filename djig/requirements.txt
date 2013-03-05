@@ -1,0 +1,4 @@
+django-tastypie==0.9.12
+django-userena==1.1.2
+django-uuslug==0.9.0
+django-voting==0.2

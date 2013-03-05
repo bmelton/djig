@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load voting_tags %}
+
+{% block content %}
+    <div class="row">
+        <div class="large-2 columns">
+            <h1 style="margin-bottom: 5px;">News</h1>
+        </div>
+        <div class="large-10 columns omega" style="padding-top: 25px;">
+            <form name="submit_news_link" action="{% url djig_submit_link %}" method="post">
+                {% csrf_token %}
+                <input type="text" name="url" id="id_url" placeholder="Submit a new story" style="display:
+                inline-block;" class="large-9 small-9 columns" />
+                <input class="small-3 columns small button" type="submit" name="submit" id="id_submit" value="Submit New Link" />
+            </form>
+        </div>
+        {% for article in articles %}
+            <div class="djig_row large-12 columns">
+                <h4 style="margin-bottom: 5px;"><a href="{{ article.url }}">{{ article.title|title }}</a></h4>
+                <div class="small-1 large-1 columns" style="text-align: center;">
+                    {% vote_by_user user on article as vote %}
+                    {% if vote.vote == 1 %}
+                        <img src="{{ STATIC_URL }}images/full.png" style="max-width: 32px;" />
+                    {% else %}
+                        <a href="{% url djig_like_article article.pk %}"><img src="{{ STATIC_URL }}images/empty.png" style="max-width: 32px;" /></a>
+                    {% endif %}
+                </div>
+                <div class="hide-for-small large-1 columns"><img src="http://placehold.it/50x50" /></div>
+                <div class="small-10 large-10 columns">
+                    <p><a href="{{ article.site }}">{{ article.site_name }}</a> - {{ article.description }}</p>
+                    <div class="row">
+                        <div class="small-12 large-6 columns">
+                            Submitted by <a href="{% url userena_profile_detail article.user.username %}">{{ article.user.username }}</a>, {{ article.created|naturaltime }}
+                        </div>
+                        <div class="small-12 large-6 columns">
+                            <a href="{% url djig_article_detail article.slug %}">{{ article.comment_count }} comments</a>
+                            {% if user.is_superuser %}
+                                &middot; <a href="/admin/djig/article/{{ article.id }}/delete/">Delete</a>
+                                &middot; <a href="/admin/djig/article/{{ article.id }}/">Edit</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% if paginator %}
+        <div class="large-12 columns" style="text-align: right;">
+            <ul class="pagination" style="float: right;">
+            {% if articles.has_previous %}
+                <li class="arrow"><a href="?page={{ articles.previous_page_number }}">&laquo;</a></li>
+            {% endif %}
+                
+            {% for page_num in paginator.page_range %}
+                {% ifequal page_num page %}
+                    <li class="current">{{ page_num }}</li>
+                {% else %}
+                    <li><a href="?page={{ page_num }}">{{ page_num }}</a>
+                {% endifequal %}
+            {% endfor %}<br />
+
+            {% if articles.has_next %}
+                <li class="arrow"><a href="?page={{ articles.next_page_number }}">&raquo;</a></li>
+            {% endif %}
+            </ul>
+        </div>
+    {% endif %}
+{% endblock %}

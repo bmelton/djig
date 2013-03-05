@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load voting_tags %}
+{% load activity_tags %}
+
+{% block content %}
+    <div class="row">
+        <div class="large-12 columns">
+            <h2 style="margin-bottom: 5px;">{{ article.title|title }}</h2>
+            <hr />
+        </div>
+        <div class="large-12 columns center">
+            <div class="large-1 columns hide-for-small">
+                {% vote_by_user user on article as vote %}
+                {% if vote.vote == 1 %}
+                    <img src="{{ STATIC_URL }}images/full.png" style="max-width: 32px;" />
+                {% else %}
+                    <a href="{% url djig_like_article article.pk %}"><img src="{{ STATIC_URL }}images/empty.png" style="max-width: 32px;" /></a>
+                {% endif %}
+                <br />
+                <img src="http://placehold.it/50x50" />
+            </div>
+            <div class="small-12 large-11 columns">
+                <p><a href="{{ article.site }}">{{ article.site_name }}</a> - {{ article.description }}</p>
+                <div class="row">
+                    <div class="small-12 large-6 columns">
+                        Submitted by <a href="{% url userena_profile_detail article.user.username %}">{{ article.user.username }}</a>, {{ article.created|naturaltime }}
+                    </div>
+                    <div class="small-12 large-6 columns">
+                        <a href="{% url djig_article_detail article.slug %}">{{ article.comment_count }} comments</a>
+                        {% if user.is_superuser %}
+                            &middot; <a href="/admin/djig/article/{{ article.id }}/delete/">Delete</a>
+                            &middot; <a href="/admin/djig/article/{{ article.id }}/">Edit</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
