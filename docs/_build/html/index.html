@@ -52,8 +52,26 @@ for use.</p>
 for use with Django-Haystack.  Haystack is not a requirement, and lack of its
 presence should not cause any harm, but may be used if search is needed. You
 will need to at least update_index after installing Djig.</p>
-<p>License: Creative Commons Non-Commercial, 3.0
-<a class="reference external" href="http://creativecommons.org/licenses/by-nc/3.0/">http://creativecommons.org/licenses/by-nc/3.0/</a></p>
+</div>
+<div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="configuration">
+<h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
+<p>Add djig to INSTALLED_APPS
+.. code-block:: python</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>INSTALLED_APPS = {</dt>
+<dd>[...],
+&#8216;djig&#8217;,</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>Add djig.urls to your root urls.py.  I have mine as &#8216;news&#8217;, like this:
+.. code-block:: python</p>
+<blockquote>
+<div>url(&#8216;^news/&#8217;, include(&#8216;djig.urls&#8217;, namespace=&#8217;news&#8217;)),</div></blockquote>
 <div class="toctree-wrapper compound">
 <ul class="simple">
 </ul>
@@ -76,7 +94,9 @@ will need to at least update_index after installing Djig.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Djig</a><ul>
+<li><a class="reference internal" href="#">Djig</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#configuration">Configuration</a><ul>
 </ul>
 </li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>

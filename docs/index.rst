@@ -10,8 +10,27 @@ for use with Django-Haystack.  Haystack is not a requirement, and lack of its
 presence should not cause any harm, but may be used if search is needed. You 
 will need to at least update_index after installing Djig.  
 
-License: Creative Commons Non-Commercial, 3.0
-http://creativecommons.org/licenses/by-nc/3.0/
+Installation
+============
+
+.. code-block:: python
+   pip install djig
+
+Configuration
+=============
+
+Add djig to INSTALLED_APPS
+.. code-block:: python
+   INSTALLED_APPS = {
+       [...],
+       'djig',
+   }
+
+Add djig.urls to your root urls.py.  I have mine as 'news', like this:
+.. code-block:: python
+   url('^news/', include('djig.urls', namespace='news')),
+
+
 
 .. toctree::
    :maxdepth: 2
