@@ -17,7 +17,7 @@
             </form>
         </div>
         <div class="large-12 columns right" style="margin-bottom: 5px;">
-            <a href="popular">{% trans "Popular" %}</a> &middot; <a href="new">{% trans "New" %}</a>
+            <a href="{% djig_home %}">{% trans "Popular" %}</a> &middot; <a href="{% url djig_newest %}">{% trans "New" %}</a>
         </div>
         {% for article in articles %}
             <div class="djig_row large-12 columns">

@@ -9,6 +9,7 @@ v1_api.register(NewsResource())
 
 urlpatterns = patterns('',
     url(r'^$',                                          'djig.views.index',             name='djig_home'),
+    url(r'^newest/$',                                   'djig.views.newest',            name='djig_newest'),
     url(r'^submit_link/$',                              'djig.views.submit_link',       name='djig_submit_link'),
     url(r'^submit_link_detail/$',                       'djig.views.submit_link_detail',name='djig_submit_link_detail'),
     url(r'^like/(?P<article_id>\d+)/$',                 'djig.views.like_article',      name='djig_like_article'),

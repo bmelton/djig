@@ -34,6 +34,25 @@ def index(request):
         "page"              : page,
     })
 
+def newest(request):
+    time_limit = date.today() - timedelta(hours=300)
+    articleset = Article.objects.filter().order_by('-created')[:100]
+    page = request.GET.get('page')
+    paginator = Paginator(articleset, 10)
+
+    try:
+        articles = paginator.page(page)
+    except PageNotAnInteger:
+        articles = paginator.page(1)
+    except EmptyPage:
+        articles = paginator.page(paginator.num_pages)
+
+    return render(request, "djig/index.html", {
+        "articles"          : articles,
+        "paginator"         : paginator,
+        "page"              : page,
+    })
+
 def article_detail(request, slug):
     article = get_object_or_404(Article, slug=slug)
     return render(request, "djig/detail.html", {
