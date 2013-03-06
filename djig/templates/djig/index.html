@@ -16,8 +16,11 @@
                 <input class="small-3 columns small button" type="submit" name="submit" id="id_submit" value="Submit New Link" />
             </form>
         </div>
-        <div class="large-12 columns right" style="margin-bottom: 5px;">
-            <a href="{% url djig_home %}">{% trans "Popular" %}</a> &middot; <a href="{% url djig_newest %}">{% trans "New" %}</a>
+        <div class="button-bar large-12 columns right" style="margin-bottom: -10px;">
+            <ul class="button-group secondary right">
+                <li class="active small button secondary even-2"><a href="{% url djig_home %}">{% trans "Popular" %}</a></li>
+                <li class="small button secondary even-2"><a href="{% url djig_newest %}">{% trans "New" %}</a></li>
+            </ul>
         </div>
         {% for article in articles %}
             <div class="djig_row large-12 columns">
