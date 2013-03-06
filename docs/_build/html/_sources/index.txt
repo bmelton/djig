@@ -10,6 +10,12 @@ for use with Django-Haystack.  Haystack is not a requirement, and lack of its
 presence should not cause any harm, but may be used if search is needed. You 
 will need to at least update_index after installing Djig.  
 
+.. note::
+
+    Djig is in alpha release.  It may have undeclared dependencies, reference
+    variables that do not exist, or lay waste to your server, database, or the 
+    innocence of your daughter.  
+
 Installation
 ============
 
