@@ -55,23 +55,22 @@ will need to at least update_index after installing Djig.</p>
 </div>
 <div class="section" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python"><pre>pip install djig</pre>
+</div>
 </div>
 <div class="section" id="configuration">
 <h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
-<p>Add djig to INSTALLED_APPS
-.. code-block:: python</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>INSTALLED_APPS = {</dt>
-<dd>[...],
-&#8216;djig&#8217;,</dd>
-</dl>
-<p>}</p>
-</div></blockquote>
-<p>Add djig.urls to your root urls.py.  I have mine as &#8216;news&#8217;, like this:
-.. code-block:: python</p>
-<blockquote>
-<div>url(&#8216;^news/&#8217;, include(&#8216;djig.urls&#8217;, namespace=&#8217;news&#8217;)),</div></blockquote>
+<p>Add <tt class="docutils literal"><span class="pre">djig</span></tt> to <tt class="docutils literal"><span class="pre">INSTALLED_APPS</span></tt></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">[</span><span class="o">...</span><span class="p">],</span>
+    <span class="s">&#39;djig&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Add <tt class="docutils literal"><span class="pre">djig.urls</span></tt> to your root <tt class="docutils literal"><span class="pre">urls.py</span></tt>.  I have mine as &#8216;news&#8217;, like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">url</span><span class="p">(</span><span class="s">&#39;^news/&#39;</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="s">&#39;djig.urls&#39;</span><span class="p">,</span> <span class="n">namespace</span><span class="o">=</span><span class="s">&#39;news&#39;</span><span class="p">)),</span>
+</pre></div>
+</div>
 <div class="toctree-wrapper compound">
 <ul class="simple">
 </ul>

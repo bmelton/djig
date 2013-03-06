@@ -13,21 +13,27 @@ will need to at least update_index after installing Djig.
 Installation
 ============
 
-.. code-block:: python
+::
+
    pip install djig
+
 
 Configuration
 =============
 
-Add djig to INSTALLED_APPS
-.. code-block:: python
+Add ``djig`` to ``INSTALLED_APPS``
+
+::
+
    INSTALLED_APPS = {
        [...],
        'djig',
    }
 
-Add djig.urls to your root urls.py.  I have mine as 'news', like this:
-.. code-block:: python
+Add ``djig.urls`` to your root ``urls.py``.  I have mine as 'news', like this:
+
+::
+
    url('^news/', include('djig.urls', namespace='news')),
 
 
