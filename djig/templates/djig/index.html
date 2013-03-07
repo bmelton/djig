@@ -4,23 +4,22 @@
 {% load voting_tags %}
 
 {% block extra_head %}
-    <script type="text/javascript">
-    /* If your site contains an 'extra_head' block, and jQuery, this will 
-       allow your 'like' clicks to be AJAXed instead of the old fashioned
-       way.  Completely not needed.
-    */
-    $(function () {
-        $(".like_button").live("click", function() {
-            // alert($(this).attr("href"));
-            var self = $(this);
-            $.get($(this).attr("href"), function(data) {
-                self.find("img").attr("src", "/static/images/full.png");
-                self.attr("href", "");
+        <script type="text/javascript">
+            /* If your site contains an 'extra_head' block, and jQuery, this will 
+               allow your 'like' clicks to be AJAXed instead of the old fashioned
+               way.  Completely not needed.
+            */
+            $(function () {
+                $(".like_button").live("click", function() {
+                    var self = $(this);
+                    $.get($(this).attr("href"), function(data) {
+                        self.find("img").attr("src", "/static/images/full.png");
+                        self.attr("href", "");
+                    });
+                    return false;
+                }); 
             });
-            return false;
-        }); 
-    });
-    </script>
+        </script>
 {% endblock %}
 
 {% block content %}
