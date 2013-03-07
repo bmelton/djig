@@ -3,6 +3,26 @@
 {% load voting_tags %}
 {% load activity_tags %}
 
+{% block extra_head %}
+    <script type="text/javascript">
+    /* If your site contains an 'extra_head' block, and jQuery, this will 
+       allow your 'like' clicks to be AJAXed instead of the old fashioned
+       way.  Completely not needed.
+    */
+    $(function () {
+        $(".like_button").live("click", function() {
+            // alert($(this).attr("href"));
+            var self = $(this);
+            $.get($(this).attr("href"), function(data) {
+                self.find("img").attr("src", "/static/images/full.png");
+                self.attr("href", "");
+            }); 
+            return false;
+        }); 
+    }); 
+    </script>
+{% endblock %}
+
 {% block content %}
     <div class="row">
         <div class="large-12 columns">
