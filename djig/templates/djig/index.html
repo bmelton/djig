@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load humanize %}
 {% load voting_tags %}
+{% load comments %}
 
 {% block extra_head %}
         {% comment %}
@@ -64,10 +65,13 @@
                             Submitted by <a href="{% url userena_profile_detail article.user.username %}">{{ article.user.username }}</a>, {{ article.created|naturaltime }}
                         </div>
                         <div class="small-12 large-6 columns">
-                            <a href="{% url djig_article_detail article.slug %}">{{ article.comment_count }} comments</a>
+                            {% if COMMENTS_ENABLED %}
+                                {% get_comment_count for djig.article article.id as comment_count %}
+                                <a href="{% url djig_article_detail article.slug %}">{{ comment_count }} comments</a> &middot;
+                            {% endif %}
                             {% if user.is_superuser %}
-                                &middot; <a href="/admin/djig/article/{{ article.id }}/delete/">Delete</a>
-                                &middot; <a href="/admin/djig/article/{{ article.id }}/">Edit</a>
+                                <a href="/admin/djig/article/{{ article.id }}/delete/">Delete</a> &middot; 
+                                <a href="/admin/djig/article/{{ article.id }}/">Edit</a>
                             {% endif %}
                         </div>
                     </div>

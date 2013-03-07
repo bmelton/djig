@@ -2,6 +2,7 @@
 {% load humanize %}
 {% load voting_tags %}
 {% load activity_tags %}
+{% load comments %}
 
 {% block extra_head %}
         {% comment %}
@@ -58,5 +59,43 @@
                 </div>
             </div>
         </div>
+        {% if COMMENTS_ENABLED %}
+        <div class="large-12 columns">
+            <hr />
+            <h4>Comments</h4>
+            <hr />
+            {% get_comment_list for article as comment_list %}
+            {% for comment in comment_list %}
+                <div class="large-12 columns">
+                    <div class="large-1 columns">
+                        <img src="{{ comment.user.get_profile.get_mugshot_url }}" />
+                    </div>
+                    <div class="large-11 columns">
+                        <blockquote>
+                            <a href="{{ comment.user.get_absolute_url }}">{{ comment.user.username }}</a><br />
+                            {{ comment.comment }}
+                            <span style="font-size: 90%; color: #666;"><br />{{ comment.submit_date|timesince }} ago</span> 
+                        </blockquote>
+                    </div>
+                </div>
+            {% endfor %}
+            <hr />
+            {% if user.is_authenticated %}
+                {% get_comment_form for article as form %}
+                <form action="{% comment_form_target %}" method="POST">
+                    {% csrf_token %}
+                    <textarea id="id_comment" rows="10" cols="40" name="comment" placeholder="Comment"></textarea>
+                    {{ form.content_type }}
+                    {{ form.object_pk }}
+                    {{ form.timestamp }}
+                    {{ form.security_hash }}
+                    <input type="hidden" name="next" value="{{ request.path }}" />
+                    <input type="submit" value="Add comment" id="id_submit" />
+                </form>
+            {% else %}
+                <p>Please <a href="{% url 'auth_login' %}">log in</a> to leave a comment.</p>
+            {% endif %}
+        </div>
+        {% endif %}
     </div>
 {% endblock %}

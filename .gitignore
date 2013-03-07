@@ -2,3 +2,5 @@ migrations/
 *.pyc
 *.swp
 dist/
+djig.egg-info/
+build/

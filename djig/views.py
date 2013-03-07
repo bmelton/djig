@@ -16,6 +16,10 @@ from django.conf import settings
 if "actstream" in settings.INSTALLED_APPS:
     from actstream import action
 
+COMMENTS_ENABLED = False
+if "django.contrib.comments" in settings.INSTALLED_APPS:
+    COMMENTS_ENABLED = True
+
 def index(request):
     time_limit = date.today() - timedelta(hours=300)
     articleset = Article.objects.filter().order_by('-calculated_score')[:100]
@@ -33,6 +37,7 @@ def index(request):
         "articles"          : articles,
         "paginator"         : paginator,
         "page"              : page,
+        "COMMENTS_ENABLED"  : COMMENTS_ENABLED,
     })
 
 def newest(request):
@@ -52,12 +57,14 @@ def newest(request):
         "articles"          : articles,
         "paginator"         : paginator,
         "page"              : page,
+        "COMMENTS_ENABLED"  : COMMENTS_ENABLED,
     })
 
 def article_detail(request, slug):
     article = get_object_or_404(Article, slug=slug)
     return render(request, "djig/detail.html", {
         "article"           : article,
+        "COMMENTS_ENABLED"  : COMMENTS_ENABLED,
     })
 
 @login_required
