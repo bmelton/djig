@@ -1,6 +1,8 @@
-from djig.models import Articleclass 
+from django.contrib import sitemaps
+import datetime
+from djig.models import Article
 
-DjigSitemap(sitemaps.Sitemap):    
+class DjigSitemap(sitemaps.Sitemap):    
     changefreq = "daily"    
     priority   = 0.5    
     
