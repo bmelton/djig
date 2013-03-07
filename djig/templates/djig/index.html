@@ -57,7 +57,7 @@
                         <a class="like_button" href="{% url djig_like_article article.pk %}?next={% firstof request.path '/' %}"><img src="{{ STATIC_URL }}images/empty.png" style="max-width: 32px;" /></a>
                     {% endif %}
                 </div>
-                <div class="hide-for-small large-1 columns"><img src="http://placehold.it/50x50" /></div>
+                <div class="hide-for-small large-1 columns"><img src="{{ article.user.get_profile.get_mugshot_url }}" /></div>
                 <div class="small-10 large-10 columns">
                     <p><a href="{{ article.site }}">{{ article.site_name }}</a> - {{ article.description }}</p>
                     <div class="row">
