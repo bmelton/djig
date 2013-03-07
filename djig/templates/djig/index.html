@@ -4,11 +4,13 @@
 {% load voting_tags %}
 
 {% block extra_head %}
-        <script type="text/javascript">
+        {% comment %}
             /* If your site contains an 'extra_head' block, and jQuery, this will 
                allow your 'like' clicks to be AJAXed instead of the old fashioned
                way.  Completely not needed.
             */
+        {% endcomment %}
+        <script type="text/javascript">
             $(function () {
                 $(".like_button").live("click", function() {
                     var self = $(this);
