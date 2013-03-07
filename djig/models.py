@@ -4,6 +4,7 @@ from django.forms import ModelForm
 import datetime
 from uuslug import uuslug 
 import times
+from django.utils.encoding import smart_unicode
 
 class Category(models.Model):
     title                   = models.CharField(max_length=100)
@@ -40,6 +41,7 @@ class Article(models.Model):
     def save(self, *args, **kwargs):
         if not self.id:
             self.slug = uuslug(self.title, instance=self)
+            self.title = self.title.encode("ascii", "ignore")
             self.created = datetime.datetime.now()
         super(Article, self).save(*args, **kwargs)
 

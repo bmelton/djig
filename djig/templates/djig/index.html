@@ -49,16 +49,16 @@
         {% for article in articles %}
             <div class="djig_row large-12 columns">
                 <h4 style="margin-bottom: 5px;"><a href="{{ article.url }}">{{ article.title|title }}</a></h4>
-                <div class="small-1 large-1 columns" style="text-align: center;">
+                <div class="small-2 large-1 columns centered" style="text-align: center;">
                     {% vote_by_user user on article as vote %}
                     {% if vote.vote == 1 %}
-                        <img src="{{ STATIC_URL }}images/full.png" style="max-width: 32px;" />
+                        <img src="{{ STATIC_URL }}images/full.png" style="max-width: 32px; margin-left: 12px;" /><br />
                     {% else %}
-                        <a class="like_button" href="{% url djig_like_article article.pk %}?next={% firstof request.path '/' %}"><img src="{{ STATIC_URL }}images/empty.png" style="max-width: 32px;" /></a>
+                        <a class="like_button" href="{% url djig_like_article article.pk %}?next={% firstof request.path '/' %}"><img src="{{ STATIC_URL }}images/empty.png" style="max-width: 32px; margin-left: 12px;" /></a><br />
                     {% endif %}
+                    <img class="hide-for-small" src="{{ article.user.get_profile.get_mugshot_url }}" />
                 </div>
-                <div class="hide-for-small large-1 columns"><img src="{{ article.user.get_profile.get_mugshot_url }}" /></div>
-                <div class="small-10 large-10 columns">
+                <div class="small-10 large-11 columns">
                     <p><a href="{{ article.site }}">{{ article.site_name }}</a> - {{ article.description }}</p>
                     <div class="row">
                         <div class="small-12 large-6 columns">
