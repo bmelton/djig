@@ -50,7 +50,6 @@
                         Submitted by <a href="{% url userena_profile_detail article.user.username %}">{{ article.user.username }}</a>, {{ article.created|naturaltime }}
                     </div>
                     <div class="small-12 large-6 columns">
-                        <a href="{% url djig_article_detail article.slug %}">{{ article.comment_count }} comments</a>
                         {% if user.is_superuser %}
                             &middot; <a href="/admin/djig/article/{{ article.id }}/delete/">Delete</a>
                             &middot; <a href="/admin/djig/article/{{ article.id }}/">Edit</a>
@@ -62,7 +61,8 @@
         {% if COMMENTS_ENABLED %}
         <div class="large-12 columns">
             <hr />
-            <h4>Comments</h4>
+            {% get_comment_count for djig.article article.id as comment_count %}
+            <h4>{{ comment_count }} Comments</h4>
             <hr />
             {% get_comment_list for article as comment_list %}
             {% for comment in comment_list %}
@@ -93,7 +93,7 @@
                     <input type="submit" value="Add comment" id="id_submit" />
                 </form>
             {% else %}
-                <p>Please <a href="{% url 'auth_login' %}">log in</a> to leave a comment.</p>
+                <p>Please <a href="/accounts/signin/?next={{ request.path }}">log in</a> to leave a comment.</p>
             {% endif %}
         </div>
         {% endif %}
