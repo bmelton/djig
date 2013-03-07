@@ -10,6 +10,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from datetime import date, timedelta
 from text_utils import unescape
 from voting.models import Vote
+from django.views.decorators.csrf import csrf_exempt
 
 from django.conf import settings
 if "actstream" in settings.INSTALLED_APPS:
@@ -114,6 +115,7 @@ def submit_link_detail(request):
         return HttpResponse("You should POST to this page, not GET it.")
             
 
+@csrf_exempt
 @login_required
 def like_article(request, article_id):
     article = get_object_or_404(Article, pk=article_id)

@@ -11,8 +11,9 @@
             */
         {% endcomment %}
         <script type="text/javascript">
-            $(function () {
-                $(".like_button").live("click", function() {
+            $(function() {
+                $(".like_button").click(function() {
+                    event.preventDefault();
                     var self = $(this);
                     $.post($(this).attr("href"), function(data) {
                         self.find("img").attr("src", "/static/images/full.png");
@@ -23,6 +24,7 @@
             });
         </script>
 {% endblock %}
+
 
 {% block content %}
     <div class="row">
