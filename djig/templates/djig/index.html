@@ -30,7 +30,7 @@
                     {% if vote.vote == 1 %}
                         <img src="{{ STATIC_URL }}images/full.png" style="max-width: 32px;" />
                     {% else %}
-                        <a href="{% url djig_like_article article.pk %}?next={% firstof request.path '/' %}"><img src="{{ STATIC_URL }}images/empty.png" style="max-width: 32px;" /></a>
+                        <a class="like_button" href="{% url djig_like_article article.pk %}?next={% firstof request.path '/' %}"><img src="{{ STATIC_URL }}images/empty.png" style="max-width: 32px;" /></a>
                     {% endif %}
                 </div>
                 <div class="hide-for-small large-1 columns"><img src="http://placehold.it/50x50" /></div>

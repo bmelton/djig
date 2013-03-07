@@ -123,8 +123,9 @@ def like_article(request, article_id):
     article.calculate_score()
     if "actstream" in settings.INSTALLED_APPS:
         action.send(request.user, verb='liked', target=article)
-    next = request.GET.get('next')
-    if next:
-        return redirect(next)
+    redirect_var = request.GET.get('next')
+    if redirect_var:
+        print redirect_var
+        return redirect(redirect_var)
     else:
         return redirect("/")
