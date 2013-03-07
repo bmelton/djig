@@ -14,7 +14,7 @@
             $(function () {
                 $(".like_button").live("click", function() {
                     var self = $(this);
-                    $.get($(this).attr("href"), function(data) {
+                    $.post($(this).attr("href"), function(data) {
                         self.find("img").attr("src", "/static/images/full.png");
                         self.attr("href", "");
                     });
