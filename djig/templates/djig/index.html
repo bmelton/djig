@@ -67,10 +67,10 @@
                         <div class="small-12 large-6 columns">
                             {% if COMMENTS_ENABLED %}
                                 {% get_comment_count for djig.article article.id as comment_count %}
-                                <a href="{% url djig_article_detail article.slug %}">{{ comment_count }} comments</a> &middot;
+                                <a href="{% url djig_article_detail article.slug %}">{{ comment_count }} comments</a> 
                             {% endif %}
                             {% if user.is_superuser %}
-                                <a href="/admin/djig/article/{{ article.id }}/delete/">Delete</a> &middot; 
+                                | <a href="/admin/djig/article/{{ article.id }}/delete/">Delete</a> &middot; 
                                 <a href="/admin/djig/article/{{ article.id }}/">Edit</a>
                             {% endif %}
                         </div>
