@@ -9,4 +9,4 @@ class Command(BaseCommand):
         articles = Article.objects.all()
         for article in articles:
             article.calculate_score()
-        self.stdout.write("Finised calculating scores.")
+        self.stdout.write("Finished calculating scores.")
