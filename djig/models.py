@@ -53,7 +53,7 @@ class Article(models.Model):
     def calculate_score(self):
         now     = times.now()
         then    = times.to_universal(self.created)
-        hour_age= ceil((now-then).total_seconds()/60/60,2)
+        hour_age= ceil((now-then).total_seconds()/60/60)
         gravity = 1.8
         self.calculated_score = (self.love_count-1)/pow((hour_age+2), gravity)
         self.save()
