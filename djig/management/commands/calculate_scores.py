@@ -13,6 +13,6 @@ class Command(BaseCommand):
         articles = Article.objects.all()
         for article in articles:
             article.calculate_score()
-               logging.debug("Calculated score for %s" % (article.title))
+            logging.debug("Calculated score for %s" % (article.title))
         logging.debug("Finished calculating scores")
         self.stdout.write("Finished calculating scores at %s." % datetime.now())
