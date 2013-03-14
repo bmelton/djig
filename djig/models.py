@@ -39,6 +39,11 @@ class Article(models.Model):
     def __unicode__(self):
         return self.title
 
+    class Meta:
+         permissions = (
+             ('group_view', 'Groups that can view an article'),
+         )
+
     def save(self, *args, **kwargs):
         if not self.id:
             self.slug = uuslug(self.title, instance=self)

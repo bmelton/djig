@@ -11,6 +11,10 @@ from datetime import date, timedelta
 from text_utils import unescape
 from voting.models import Vote
 from django.views.decorators.csrf import csrf_exempt
+from guardian.shortcuts import assign, remove_perm
+from django.contrib.auth.models import Group, User
+
+everybody_group = Group.objects.get(name="Everybody")
 
 from django.conf import settings
 if "actstream" in settings.INSTALLED_APPS:
@@ -110,6 +114,7 @@ def submit_link_detail(request):
             obj = form.save(commit=False)
             obj.user = request.user
             obj.save()
+            Vote.objects.record_vote(obj, request.user, +1)
             if "actstream" in settings.INSTALLED_APPS:
                 action.send(request.user, verb='submitted', target=obj)
             return redirect("/")
@@ -127,9 +132,9 @@ def submit_link_detail(request):
 def like_article(request, article_id):
     article = get_object_or_404(Article, pk=article_id)
     Vote.objects.record_vote(article, request.user, +1)
-    article.love_count = article.love_count + 1
-    article.save()
-    article.calculate_score()
+    # article.love_count = article.love_count + 1
+    # article.save()
+    # article.calculate_score()
     if "actstream" in settings.INSTALLED_APPS:
         action.send(request.user, verb='liked', target=article)
     if request.method == "POST":
